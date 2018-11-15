@@ -6,11 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="91dp"
+        android:background="@drawable/lin_lay_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/hey_there"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:text="@string/where"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="288dp"
+            android:layout_height="50dp"
+            android:layout_alignBaseline="@id/imageView5"
+            android:layout_below="@+id/textView5"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/search"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="36dp"
+            android:layout_height="30dp"
+            android:layout_alignStart="@+id/textView4"
+            android:layout_below="@+id/textView5"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/pin_black" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
