@@ -3,4 +3,7 @@
     <string name="location_permission_denied" />
     <string name="permission_required_toast" />
     <string name="permission_rationale_location" />
+    <string name="where">Where are you going?</string>
+    <string name="hey_there">Hey There!</string>
+    <string name="search">Search for destination</string>
 </resources>
