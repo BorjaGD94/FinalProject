@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -57,11 +58,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
         EditText et = (EditText)findViewById(R.id.editText);
-        et.setOnClickListener(new View.OnClickListener() {
+        et.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+
             }
         });
     }
