@@ -1,178 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <EditText
-        android:id="@+id/work"
+        android:id="@+id/editText8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="203dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Add work places"/>
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="@+id/editText6"
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
-    <EditText
-        android:id="@+id/add"
+    <ImageView
+        android:id="@+id/imageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="145dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Other places"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="79dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pin32" />
 
-    <EditText
-        android:id="@+id/home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="202dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Add home"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="22dp"
+        android:layout_height="19dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/seekBar2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/error" />
 
-    <EditText
-        android:id="@+id/origen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Choose an origin"/>
+    <SeekBar
+        android:id="@+id/seekBar2"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="215dp"
+        android:layout_height="19dp"
+        android:max="7"
+        android:progress="1"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="29dp" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="215dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/home"
-        android:layout_marginTop="15dp"
-        android:hint="Choose an origin"
+        android:layout_marginBottom="1dp"
         android:text="Passengers"
-        app:layout_anchorGravity="bottom|center" />
+        app:layout_constraintBottom_toTopOf="@+id/seekBar2"
+        app:layout_constraintStart_toStartOf="@+id/seekBar2" />
+
+    <ImageView
+        android:id="@+id/PinOri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        app:srcCompat="@drawable/pin32" />
+
+    <EditText
+        android:id="@+id/Ori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Choose an Origin"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/destination"
+        app:layout_constraintTop_toBottomOf="@+id/destination" />
 
     <EditText
         android:id="@+id/destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="113dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="13dp"
         android:ems="10"
+        android:hint="Choose an destination"
         android:inputType="textPersonName"
-        android:hint="Choose Destination"/>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="169dp"
-        android:background="#D9D7D7"
-        android:text="Favourities"
-        android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="118dp"
-        android:background="#D9D7D7"
-        android:text="Recent Places"
-        android:textAlignment="center" />
-
-    <ImageView
-        android:id="@+id/imageHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/home"
-        android:layout_alignStart="@+id/image_add"
-        app:srcCompat="@drawable/home_icon" />
-
-    <ImageView
-        android:id="@+id/image_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/add"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="23dp"
-        app:srcCompat="@drawable/plus" />
-
-    <ImageView
-        android:id="@+id/pinOri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/origen"
-        android:layout_alignStart="@+id/imageHome"
-        app:srcCompat="@drawable/pin32" />
+        app:layout_constraintEnd_toEndOf="@+id/seekBar2"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
 
     <ImageView
         android:id="@+id/pinDes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/destination"
-        android:layout_alignStart="@+id/imageHome"
-        app:srcCompat="@drawable/pin32" />
+        android:layout_height="33dp"
+        app:srcCompat="@drawable/pin32"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="133dp" />
+
+    <TextView
+        android:id="@+id/fav"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="120dp"
+        android:layout_marginTop="120dp"
+        android:background="#FFFFFF"
+        android:text="Favourites"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/editText8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/destination"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageWork"
+        android:id="@+id/imageView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/work"
-        android:layout_alignStart="@+id/image_add"
-        app:srcCompat="@drawable/portfolio" />
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.471"
+        app:srcCompat="@drawable/home_icon" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="214dp"
+    <EditText
+        android:id="@+id/editText6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:max="6"
-        android:progress="1" />
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="@+id/editText7"
+        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+        app:layout_constraintStart_toEndOf="@+id/imageView9" />
 
     <ImageView
-        android:id="@+id/imgCancel"
-        android:layout_width="33dp"
-        android:layout_height="24dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/textView"
-        android:layout_marginStart="13dp"
-        app:srcCompat="@drawable/error" />
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/portfolio" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="109dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginStart="0dp">
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/plus" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+    <TextView
+        android:id="@+id/recent"
+        android:layout_width="368dp"
+        android:layout_height="27dp"
+        android:background="#CCCC"
+        android:gravity="center"
+        android:text="Recent Places"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="386dp" />
 
-    <ListView
-        android:layout_width="297dp"
-        android:layout_height="119dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
 
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
