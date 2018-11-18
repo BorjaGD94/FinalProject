@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    Location loc = getDeviceLocation();
+                    Task task = null;
+                    Location loc = (Location) task.getResult();
                     intent.putExtra("Location", loc);
                     startActivity(intent);
                     return true;
