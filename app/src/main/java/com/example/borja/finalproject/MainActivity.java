@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    Location loc = getDeviceLocation();
+                    intent.putExtra("Location", loc);
                     startActivity(intent);
                     return true;
                 }
@@ -92,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         getLocationPermission();
     }
 
-    private void getDeviceLocation(){
+    private Location getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
-
+        Location currentLocation = null;
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }catch (SecurityException e){
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
+        return currentLocation;
     }
 
     private void moveCamera(LatLng latLng, float zoom){
