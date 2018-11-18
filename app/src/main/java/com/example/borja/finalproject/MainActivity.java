@@ -39,6 +39,8 @@ import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    double latitude =0;
+    double longitud =0;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
@@ -63,9 +65,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    Task task = null;
-                    Location loc = (Location) task.getResult();
+                    /*Location loc = getDeviceLocation();
+                    double latitude =loc.getLatitude();
+                    double longitude =loc.getLongitude();
                     intent.putExtra("Location", loc);
+                    */
+                    Log.d("latitude", Double.toString(latitude));
+                    intent.putExtra("Latitude", Double.toString(latitude));
+                  intent.putExtra("longitude", Double.toString(longitud));
+
                     startActivity(intent);
                     return true;
                 }
@@ -113,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM);
+                            latitude = currentLocation.getLatitude();
+                            longitud = currentLocation.getLongitude();
 
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
