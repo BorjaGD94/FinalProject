@@ -1,186 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SearchActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/error"
+        android:layout_width="28dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/error" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ori"
+        android:layout_below="@+id/error"
+        android:max="7"
+        android:progress="1" />
+
+    <TextView
+        android:id="@+id/pas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/error"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="116dp"
+        android:text="Passangers" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_alignTop="@+id/ori"
+        app:srcCompat="@drawable/pin32" />
+
+    <EditText
+        android:id="@+id/ori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="Choose an origin"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="105dp"
+        android:ems="10"
+        android:hint="Choose a destination"
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_alignTop="@+id/editText3"
+        app:srcCompat="@drawable/pin32" />
+
+    <TextView
+        android:id="@+id/fav"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="167dp"
+        android:background="#CCCC"
+        android:text="Favourites"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView6"
+        android:layout_alignTop="@+id/home"
+        app:srcCompat="@drawable/home_icon" />
+
+    <EditText
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:ems="10"
+        android:hint="Home"
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editText8"
+        android:layout_marginStart="33dp"
+        app:srcCompat="@drawable/portfolio" />
 
     <EditText
         android:id="@+id/editText8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="261dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintStart_toStartOf="@+id/editText6"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="79dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pin32" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="22dp"
-        android:layout_height="19dp"
-        android:layout_marginEnd="76dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/seekBar2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/error" />
-
-    <SeekBar
-        android:id="@+id/seekBar2"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="215dp"
-        android:layout_height="19dp"
-        android:max="7"
-        android:progress="1"
-        tools:layout_editor_absoluteX="71dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:text="Passengers"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar2"
-        app:layout_constraintStart_toStartOf="@+id/seekBar2" />
-
-    <ImageView
-        android:id="@+id/PinOri"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:srcCompat="@drawable/pin32" />
+        android:hint="Work"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/Ori"
+        android:id="@+id/other"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="13dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="235dp"
         android:ems="10"
-        android:hint="Choose an Origin"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/destination"
-        app:layout_constraintTop_toBottomOf="@+id/destination" />
-
-    <EditText
-        android:id="@+id/destination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:layout_marginTop="13dp"
-        android:ems="10"
-        android:hint="Choose an destination"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/seekBar2"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar2" />
+        android:hint="Other"
+        android:inputType="textPersonName" />
 
     <ImageView
-        android:id="@+id/pinDes"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        app:srcCompat="@drawable/pin32"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="133dp" />
-
-    <TextView
-        android:id="@+id/fav"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="120dp"
-        android:layout_marginTop="120dp"
-        android:background="#FFFFFF"
-        android:text="Favourites"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/editText8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/destination"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471"
-        app:srcCompat="@drawable/home_icon" />
-
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintStart_toStartOf="@+id/editText7"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
-
-    <EditText
-        android:id="@+id/editText7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="24dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-        app:layout_constraintStart_toEndOf="@+id/imageView9" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/portfolio" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText8"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_alignStart="@+id/imageView4"
+        android:layout_alignTop="@+id/other"
         app:srcCompat="@drawable/plus" />
+
 
     <TextView
         android:id="@+id/recent"
-        android:layout_width="368dp"
-        android:layout_height="27dp"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="193dp"
         android:background="#CCCC"
         android:gravity="center"
-        android:text="Recent Places"
+        android:text="Recent places"
         android:textAlignment="center"
-        android:textColor="#000000"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="386dp" />
+        android:textColor="#000000" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:layout_alignEnd="@+id/pas"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-249dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </HorizontalScrollView>
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="141dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Dir1" />
+
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="83dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Dir2" />
+
+    <EditText
+        android:id="@+id/editText12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Dir3" />
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
