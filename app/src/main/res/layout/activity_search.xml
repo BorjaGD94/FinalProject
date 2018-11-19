@@ -50,19 +50,8 @@
         android:hint="Choose an origin"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/des"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp"
-        android:ems="10"
-        android:hint="Choose a destination"
-        android:inputType="textPersonName" />
-
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/desImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/imageView2"
@@ -200,6 +189,25 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Dir3" />
+
+    <EditText
+        android:id="@+id/des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="104dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Choose an destination"/>
+
+    <TextView
+        android:id="@+id/place_details"
+        android:layout_width="99dp"
+        android:layout_height="193dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/seekBar"
+        android:text="TextView" />
 
 
 </RelativeLayout>
