@@ -1,18 +1,18 @@
 package com.example.borja.finalproject;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
 
             url = new String(params[0]);
             try {
-                dirOri =   JsonReader.readJsonFromUrl(url);
+                dirOri = JsonReader.readJsonFromUrl(url);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -62,19 +62,19 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Void result) {
-
-
-            String origen = "A";
+            final ObjectMapper mapper = new ObjectMapper();
+            String x = "A";
             String des = dirOri.toString();
+            Log.d("String:",des);
             try {
-               origen =  dirOri.getString("results");
-            } catch (JSONException e) {
+                GoogleGeoCodeResponse result1 = mapper.readValue(des, GoogleGeoCodeResponse.class);
+                x = result1.results[0].formatted_address;
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
             txtView = findViewById(R.id.ori);
-            txtView.setText(origen);
+            txtView.setText(x);
             txtView2 = findViewById(R.id.des);
             txtView2.setText(des);
 
