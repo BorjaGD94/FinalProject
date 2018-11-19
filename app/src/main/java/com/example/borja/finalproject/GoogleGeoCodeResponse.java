@@ -21,10 +21,6 @@ class results{
     public geometry geometry ;
     public String[] types;
     public address_component[] address_components;
-
-    public String getFormatted_address() {
-        return formatted_address;
-    }
 }
 
 class geometry{
