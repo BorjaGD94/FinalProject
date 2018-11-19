@@ -1,5 +1,6 @@
 package com.example.borja.finalproject;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -24,6 +25,7 @@ class results{
 }
 
 class geometry{
+
     public bounds bounds;
     public String location_type ;
     public location location;
