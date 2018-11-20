@@ -18,7 +18,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".ServicesActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +31,7 @@
             android:value="AIzaSyBl5T6cMmQC0Zxi8rY1lXW1KH2sFJkCb6Y" />
 
         <activity android:name=".SearchActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ServicesActivity"/>
     </application>
 
 </manifest>
