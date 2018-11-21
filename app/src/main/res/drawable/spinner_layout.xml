@@ -19,16 +19,20 @@
                 </shape>
             </item>
             <item
+                android:right="17dp">
+                <bitmap android:src="@drawable/down_arrow"
+                    android:gravity="center|right" />
+            </item>
+            <!--<item
                 android:top="16dp"
                 android:right="15dp">
-                <bitmap android:src="@drawable/down_arrow_1"
-                    android:gravity="top|right" />
-            </item>
+                <bitmap android:src="@drawable/up_arrow_32"
+                    android:gravity="center|right" />
+            </item>-->
             <item
-                android:top="9dp"
-                android:left="12dp">
-                <bitmap android:src="@drawable/taxi_32"
-                    android:gravity="top|left"
+                android:left="15dp">
+                <bitmap android:src="@drawable/taxi_64"
+                    android:gravity="center|left"
                     android:color="#000000" />
             </item>
         </layer-list>

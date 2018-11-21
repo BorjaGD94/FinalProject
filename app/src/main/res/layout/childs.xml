@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/child"
+        android:layout_width="fill_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:textColor="#000000" />
 
     <ImageView
         android:id="@+id/serviceIcon"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:padding="5dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/child"
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/serviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/child"
         android:layout_toEndOf="@+id/serviceIcon"
         android:padding="5dp"
         android:text="TextView"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/waitingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/serviceName"
-        android:layout_toEndOf="@+id/serviceIcon"
+        android:layout_alignBottom="@+id/serviceIcon"
+        android:layout_alignStart="@+id/serviceName"
         android:padding="5dp"
         android:text="TextView"
         android:textStyle="bold" />
@@ -35,11 +47,11 @@ android:layout_height="match_parent">
         android:id="@+id/priceEstimate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/serviceName"
+        android:layout_alignEnd="@+id/child"
+        android:layout_centerVertical="true"
         android:padding="5dp"
         android:text="TextView"
+        android:textColor="#85bb65"
         android:textStyle="bold" />
-
 
 </RelativeLayout>
