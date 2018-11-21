@@ -209,5 +209,15 @@
         android:layout_toStartOf="@+id/seekBar"
         android:text="TextView" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="62dp"
+        android:layout_height="37dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginEnd="16dp"
+        android:text="Go"
+        android:onClick="onClick"/>
+
 
 </RelativeLayout>

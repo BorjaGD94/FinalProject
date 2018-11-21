@@ -1,6 +1,7 @@
 package com.example.borja.finalproject;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     double latitude =0;
     double longitud =0;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
