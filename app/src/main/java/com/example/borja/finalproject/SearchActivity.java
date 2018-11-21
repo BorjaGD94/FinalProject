@@ -1,12 +1,12 @@
 package com.example.borja.finalproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,13 +29,20 @@ public class SearchActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
     private TextView mPlaceDetailsText;
+    private EditText destinotxt;
+    private EditText hometext;
+    private EditText oritext;
+
+    String origen;
+    String destino = "B";
 
     String latitude;
     String longitud;
-    EditText destino;
-    TextView txtView;
+    TextView origentxt;
     JSONObject dirOri = null;
+    int estado;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,37 +61,64 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         //autocompleteactivity
-        destino = findViewById(R.id.des);
-        destino.setOnClickListener(new View.OnClickListener() {
+
+        destinotxt = findViewById(R.id.des);
+        destinotxt.setOnTouchListener(new View.OnTouchListener() {
+
+
             @Override
-            public void onClick(View view) { openAutocompleteActivity(); } });
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openAutocompleteActivity();
+                    estado = 1;
+                    return true;
+                }
+                return false;
+
+            }
+        });
+
+        origentxt = findViewById(R.id.ori);
+        destinotxt.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openAutocompleteActivity();
+                    estado = 2;
+                    return true;
+                }
+                return false;
+
+            }
+        });
 
         // Retrieve the TextViews that will display details about the selected place.
-        destino = (EditText) findViewById(R.id.des);
         mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
+        destinotxt = findViewById(R.id.des);
+        origentxt = findViewById(R.id.ori);
     }
 
     private void openAutocompleteActivity() {
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
-            Intent intent = new PlaceAutocomplete .IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-                    .build(this);
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
             startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
-            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
-                    0 /* requestCode */).show();
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0 /* requestCode */).show();
         } catch (GooglePlayServicesNotAvailableException e) {
             // Indicates that Google Play Services is not available and the problem is not easily
             // resolvable.
-            String message = "Google Play Services is not available: " +
-                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+            String message = "Google Play Services is not available: " + GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
 
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * Called after the autocomplete activity has finished to return its result.
      */
@@ -101,16 +135,22 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 // Format the place's details and display them in the TextView.
-                destino.setText(place.getAddress());
-                mPlaceDetailsText.setText(place.getAddress());
+                switch(estado) {
+                    case 1:
+                        origentxt.setText(origen);
+                        break;
+                    case 2:
+                        destinotxt.setText(destino);
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                } //end switch
 
-                // Display attributions if required.
-                CharSequence attributions = place.getAttributions();
-                if (!TextUtils.isEmpty(attributions)) {
-                    destino.setText(Html.fromHtml(attributions.toString()));
-                } else {
-                    destino.setText("");
-                }
+                destino = place.getAddress().toString();
+                destinotxt.setText(destino);
+                mPlaceDetailsText.setText(destino);
+
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 //Log.e(TAG, "Error: Status = " + status.toString());
@@ -145,18 +185,19 @@ public class SearchActivity extends AppCompatActivity {
 
         protected void onPostExecute(Void result) {
             final ObjectMapper mapper = new ObjectMapper();
-            String x = "A";
+
             String des = dirOri.toString();
             Log.d("String:", des);
             try {
                 GoogleGeoCodeResponse result1 = mapper.readValue(des, GoogleGeoCodeResponse.class);
-                x = result1.results[0].formatted_address;
+                origen = result1.results[0].formatted_address;
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            txtView = findViewById(R.id.ori);
-            txtView.setText(x);
+            origentxt = findViewById(R.id.ori);
+            origentxt.setText(origen);
+            
 
 /*
             JSONArray jsonArray = null;
@@ -178,7 +219,16 @@ public class SearchActivity extends AppCompatActivity {
 */
         }
     }
+   //change activity.
+    public void onClick(View view) {
+        if (destinotxt != null && origentxt != null) {
+            Intent intent = new Intent(SearchActivity.this, ServicesActivity.class);
+                intent.putExtra("origen", origen );
+                intent.putExtra("destino", destino);
+                startActivity(intent) ;
 
+            }
 
+    }
 
 }
