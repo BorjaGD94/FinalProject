@@ -63,7 +63,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ImageView child_logo= (ImageView) convertView.findViewById(R.id.serviceIcon);
         child_name.setText(childText.serviceName);
         child_price.setText(childText.servicePrice);
-        child_time.setText(childText.servicePrice);
+        child_time.setText(childText.serviceTime);
         child_logo.setImageResource(childText.serviceLogo);
 
         //child_text.setText(childText);

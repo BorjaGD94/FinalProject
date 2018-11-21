@@ -10,9 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="54dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:padding="10dp"
-        android:textColor="#000000"
-        android:textSize="13sp" />
+        android:textColor="#000000" />
 
     <ImageView
         android:id="@+id/serviceIcon"
@@ -30,6 +30,7 @@
         android:layout_toEndOf="@+id/serviceIcon"
         android:padding="5dp"
         android:text="TextView"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
@@ -46,9 +47,8 @@
         android:id="@+id/priceEstimate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_alignEnd="@+id/child"
+        android:layout_centerVertical="true"
         android:padding="5dp"
         android:text="TextView"
         android:textColor="#85bb65"
