@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
 
     String latitude;
     String longitud;
+    String  destino_latLng;
     TextView origentxt;
     JSONObject dirOri = null;
     int estado;
@@ -148,6 +149,7 @@ public class SearchActivity extends AppCompatActivity {
                 } //end switch
 
                 destino = place.getAddress().toString();
+                destino_latLng = place.getLatLng().toString();
                 destinotxt.setText(destino);
                 mPlaceDetailsText.setText(destino);
 
@@ -221,10 +223,14 @@ public class SearchActivity extends AppCompatActivity {
     }
    //change activity.
     public void onClick(View view) {
+
         if (destinotxt != null && origentxt != null) {
             Intent intent = new Intent(SearchActivity.this, ServicesActivity.class);
                 intent.putExtra("origen", origen );
                 intent.putExtra("destino", destino);
+                intent.putExtra("origen_lat", longitud );
+                intent.putExtra("orige_lat", latitude );
+                intent.putExtra("destino_latlon",  destino_latLng);
                 startActivity(intent) ;
 
             }
