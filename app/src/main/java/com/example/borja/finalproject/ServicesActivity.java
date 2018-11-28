@@ -32,6 +32,10 @@ public class ServicesActivity extends Activity {
     private static ExpandableListView expandableListView;
     @SuppressLint("StaticFieldLeak")
     private static ExpandableListAdapter adapter;
+    private String origen_lat;
+    private String origen_long;
+    private double destino_lat;
+    private double destino_lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,14 @@ public class ServicesActivity extends Activity {
         expandableListView.setGroupIndicator(null);
 
         setItems();
-        setListener();
+        setListener();Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            origen_lat = extras.getString("origen_lat");
+            origen_long = extras.getString("origen_long");
+            destino_lat = extras.getDouble("destino_lat");
+            destino_lat = extras.getDouble("destino_lon");
+        }
 
     }
 
@@ -219,7 +230,7 @@ public class ServicesActivity extends Activity {
 
         //Get cost, distance, and duration estimates between two locations.
 
-        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(37.7833, -122.4167, RideTypeEnum.CLASSIC.toString(), 37.7794703, -122.4233223);
+        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), RideTypeEnum.CLASSIC.toString(), destino_lat, destino_lat);
 
         costEstimateCall.enqueue(new Callback<CostEstimateResponse>() {
             @Override
