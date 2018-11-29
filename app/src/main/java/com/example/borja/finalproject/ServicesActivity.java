@@ -2,6 +2,7 @@ package com.example.borja.finalproject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -222,9 +223,9 @@ public class ServicesActivity extends Activity {
             public boolean onGroupClick(ExpandableListView listview, View view,
                                         int group_pos, long id) {
 
-                Toast.makeText(ServicesActivity.this,
+                               Toast.makeText(ServicesActivity.this,
                         "You clicked : " + adapter.getGroup(group_pos),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
                 return false;
             }
         });
@@ -254,6 +255,13 @@ public class ServicesActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView listview, View view,
                                         int groupPos, int childPos, long id) {
+                if ((groupPos == 3) && (childPos == 0)) {
+                    Intent intent = new Intent(ServicesActivity.this, MapsActivity.class);
+                    //intent.putExtra("origen", origen);
+                    //intent.putExtra("destino", destino);
+                    startActivity(intent);
+                }
+
                 Toast.makeText(
                         ServicesActivity.this,
                         "You clicked : " + adapter.getChild(groupPos, childPos),

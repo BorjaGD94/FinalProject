@@ -36,7 +36,7 @@
 
         <activity android:name=".SearchActivity" />
         <activity android:name=".ServicesActivity" />
-        <activity android:name=".Detail_Service"></activity>
+        <activity android:name=".MapsActivity"></activity>
     </application>
 
 </manifest>
