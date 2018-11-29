@@ -2,6 +2,7 @@ package com.example.borja.finalproject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lyft.lyftbutton.RideTypeEnum;
 import com.lyft.networking.ApiConfig;
 import com.lyft.networking.LyftApiFactory;
@@ -21,6 +23,11 @@ import com.lyft.networking.apiObjects.Eta;
 import com.lyft.networking.apiObjects.EtaEstimateResponse;
 import com.lyft.networking.apis.LyftPublicApi;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +48,10 @@ public class ServicesActivity extends Activity {
 
     Service svLyft = new Service();
 
+
+    JSONObject walkinginfo;
+    String time;
+    String distance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +185,20 @@ public class ServicesActivity extends Activity {
         child2.add(sv3);
         child2.add(sv4);
 
+        // Adding child data
+        for (int i = 1; i < 6; i++) {
+            //child3.add("Group 3  - " + " : Child" + i);
+
+        }
+        // Adding child data
+        String sN5 = "Walking";
+        int sL5 = R.drawable.walking_32;
+        String sT5 = distance;
+        String sP5 = "Free";
+        Service sv5 = new Service(sN5, sL5, sT5, sP5);
+
+        child4.add(sv5);
+
         // Adding header and childs to hash map
         hashMap.put(header.get(0), child1);
         hashMap.put(header.get(1), child2);
@@ -245,10 +270,7 @@ public class ServicesActivity extends Activity {
 
     public void lyftInfo(@Nullable final RevealServiceCallbacks callbacks) throws InterruptedException {
 
-        ApiConfig apiConfig = new ApiConfig.Builder()
-                .setClientId("TqXRrq9FM124")
-                .setClientToken("/oU5+AqwehTKXFCVQT8D0ZAXwAOVfNTAu+dAxLuPUSnqGN/0JaNI1VX0TnWIcrj+HSawTSgbqSwoMjkkBzzu6sG9M6VFoNtLNB90MuhcWrqKPTjhNAZejls=")
-                .build();
+        ApiConfig apiConfig = new ApiConfig.Builder().setClientId("TqXRrq9FM124").setClientToken("/oU5+AqwehTKXFCVQT8D0ZAXwAOVfNTAu+dAxLuPUSnqGN/0JaNI1VX0TnWIcrj+HSawTSgbqSwoMjkkBzzu6sG9M6VFoNtLNB90MuhcWrqKPTjhNAZejls=").build();
 
         LyftPublicApi lyftPublicApi = new LyftApiFactory(apiConfig).getLyftPublicApi();
 
@@ -315,4 +337,91 @@ public class ServicesActivity extends Activity {
         //Log.d("LyftInfo func return", "price: "+svLyft.getServicePrice());
         //return svLyft;
     }
+
+    public class BackgroundTask extends AsyncTask<String, Integer, Void> {
+
+
+        @Override
+        protected Void doInBackground(String... params) {
+            String url;
+
+            url = new String(params[0]);
+            try {
+                walkinginfo = JsonReader.readJsonFromUrl(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(Void result) {
+            final ObjectMapper mapper = new ObjectMapper();
+
+            String des = walkinginfo.toString();
+            Log.d("String:", des);
+
+
+/* forma bonita
+                Gson gson= null;
+                GoogleDistanceMatrixApiResponse response = mapper.readValue(des, GoogleDistanceMatrixApiResponse.class);
+                GoogleDistanceMatrixApiResponse response2 = gson.fromJson(walking, GoogleDistanceMatrixApiResponse.class);
+                distance = response.getRows().get(0).getElements().get(0).getDistance().getText();
+                distance = response2.getRows().get(0).getElements().get(0).getDistance().getText();
+
+*/
+
+            JSONArray jsonObject1 = null;
+            try {
+                jsonObject1 = (JSONArray) walkinginfo.get("rows");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONObject jsonObject2 = null;
+            try {
+                jsonObject2 = (JSONObject) jsonObject1.get(0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONArray jsonObject3 = null;
+            try {
+                jsonObject3 = (JSONArray) jsonObject2.get("elements");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONObject elementObj = null;
+            try {
+                elementObj = (JSONObject) jsonObject3.get(0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONObject distanceObj = null;
+            try {
+                distanceObj = (JSONObject) elementObj.get("distance");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            JSONObject timeObj = null;
+            try {
+                timeObj = (JSONObject) elementObj.get("duration");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                distance = distanceObj.getString("text");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                time = timeObj.getString("text");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 }
