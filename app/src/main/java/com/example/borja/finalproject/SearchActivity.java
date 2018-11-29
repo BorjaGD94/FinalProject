@@ -232,7 +232,7 @@ public class SearchActivity extends AppCompatActivity {
                 intent.putExtra("origen_long", longitud );
                 intent.putExtra("origen_lat", latitude );
                 intent.putExtra("destino_lat",  destino_lat);
-            intent.putExtra("destino_lon",  destino_long);
+                intent.putExtra("destino_lon",  destino_long);
                 startActivity(intent) ;
 
             }
