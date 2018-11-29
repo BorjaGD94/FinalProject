@@ -62,7 +62,7 @@ public class SearchActivity extends AppCompatActivity {
 
         }
 
-        //autocompleteactivity
+        //autocompleteactivity destino
 
         destinotxt = findViewById(R.id.des);
         destinotxt.setOnTouchListener(new View.OnTouchListener() {
@@ -72,7 +72,8 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     openAutocompleteActivity();
-                    estado = 1;
+                    destinotxt.setText("");
+                    estado = 2;
                     return true;
                 }
                 return false;
@@ -80,15 +81,16 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //origen autocomple
         origentxt = findViewById(R.id.ori);
-        destinotxt.setOnTouchListener(new View.OnTouchListener() {
-
+        origentxt.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     openAutocompleteActivity();
-                    estado = 2;
+                    origentxt.setText("");
+                    estado = 1 ;
                     return true;
                 }
                 return false;
@@ -100,6 +102,7 @@ public class SearchActivity extends AppCompatActivity {
         mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
         destinotxt = findViewById(R.id.des);
         origentxt = findViewById(R.id.ori);
+
     }
 
     private void openAutocompleteActivity() {
@@ -139,20 +142,20 @@ public class SearchActivity extends AppCompatActivity {
                 // Format the place's details and display them in the TextView.
                 switch(estado) {
                     case 1:
-                        origentxt.setText(origen);
+                        origentxt.setText("");
+                        origentxt.setText(place.getAddress().toString());
+                        origen=place.getAddress().toString();
                         break;
                     case 2:
-                        destinotxt.setText(destino);
+                        destinotxt.setText(place.getAddress().toString());
+                        destino=place.getAddress().toString();
                         break;
                     case 3:
                         break;
                     case 4:
                 } //end switch
 
-                destino = place.getAddress().toString();
-                destino_lat = place.getLatLng().latitude;
-                destinotxt.setText(destino);
-                mPlaceDetailsText.setText(destino);
+           //mPlaceDetailsText.setText(destino+","+ origen);
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
@@ -200,7 +203,6 @@ public class SearchActivity extends AppCompatActivity {
 
             origentxt = findViewById(R.id.ori);
             origentxt.setText(origen);
-            
 
 /*
             JSONArray jsonArray = null;
