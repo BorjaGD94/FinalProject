@@ -3,6 +3,8 @@ package com.example.borja.finalproject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +53,9 @@ public class ServicesActivity extends Activity {
 
     Service svLyft = new Service();
 
+    ProgressBar pr;
+    TextView tx;
+
 
     JSONObject walkinginfo;
     String time;
@@ -58,7 +65,10 @@ public class ServicesActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
-
+        pr = (ProgressBar)findViewById(R.id.progressBar6);
+        tx = findViewById(R.id.textView);
+        pr.getIndeterminateDrawable()
+                .setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
         expandableListView = (ExpandableListView) findViewById(R.id.elistview);
 
         // Setting group indicator null for custom indicator
@@ -79,6 +89,8 @@ public class ServicesActivity extends Activity {
             lyftInfo(new RevealServiceCallbacks() {
                 @Override
                 public void onSuccess(@NonNull Service service) {
+                    pr.setVisibility(View.INVISIBLE);
+                    tx.setVisibility(View.INVISIBLE);
                     setItems(service);
                     setListener();
                 }
@@ -223,7 +235,7 @@ public class ServicesActivity extends Activity {
             public boolean onGroupClick(ExpandableListView listview, View view,
                                         int group_pos, long id) {
 
-                               Toast.makeText(ServicesActivity.this,
+                Toast.makeText(ServicesActivity.this,
                         "You clicked : " + adapter.getGroup(group_pos),
                         Toast.LENGTH_LONG).show();
                 return false;
@@ -278,7 +290,10 @@ public class ServicesActivity extends Activity {
 
     public void lyftInfo(@Nullable final RevealServiceCallbacks callbacks) throws InterruptedException {
 
-        ApiConfig apiConfig = new ApiConfig.Builder().setClientId("TqXRrq9FM124").setClientToken("/oU5+AqwehTKXFCVQT8D0ZAXwAOVfNTAu+dAxLuPUSnqGN/0JaNI1VX0TnWIcrj+HSawTSgbqSwoMjkkBzzu6sG9M6VFoNtLNB90MuhcWrqKPTjhNAZejls=").build();
+        ApiConfig apiConfig = new ApiConfig.Builder()
+                .setClientId("TqXRrq9FM124")
+                .setClientToken("/oU5+AqwehTKXFCVQT8D0ZAXwAOVfNTAu+dAxLuPUSnqGN/0JaNI1VX0TnWIcrj+HSawTSgbqSwoMjkkBzzu6sG9M6VFoNtLNB90MuhcWrqKPTjhNAZejls=")
+                .build();
 
         LyftPublicApi lyftPublicApi = new LyftApiFactory(apiConfig).getLyftPublicApi();
 
