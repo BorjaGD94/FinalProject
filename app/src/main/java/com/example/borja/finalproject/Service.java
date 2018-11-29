@@ -8,6 +8,8 @@ public class Service {
     public String servicePrice;
 
 
+    public Service(){}
+
     public Service(String serviceName, Integer serviceLogo, String serviceTime, String servicePrice)
     {
         this.serviceName = serviceName;

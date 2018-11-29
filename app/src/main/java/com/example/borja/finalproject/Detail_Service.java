@@ -19,6 +19,7 @@ public class Detail_Service extends AppCompatActivity {
     /**
      * Called when the activity is first created.
      */
+    /*
     private List<Overlay> mapOverlays;
 
     private Projection projection;
@@ -82,4 +83,5 @@ public class Detail_Service extends AppCompatActivity {
 
     private class Overlay {
     }
+    */
 }
