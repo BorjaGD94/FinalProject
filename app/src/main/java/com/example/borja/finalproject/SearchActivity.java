@@ -99,7 +99,7 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         // Retrieve the TextViews that will display details about the selected place.
-        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
+        //mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
         destinotxt = findViewById(R.id.des);
         origentxt = findViewById(R.id.ori);
 
@@ -203,6 +203,7 @@ public class SearchActivity extends AppCompatActivity {
 
             origentxt = findViewById(R.id.ori);
             origentxt.setText(origen);
+            
 
 /*
             JSONArray jsonArray = null;

@@ -201,14 +201,6 @@
         android:inputType="textPersonName"
         android:hint="Choose an destination"/>
 
-    <TextView
-        android:id="@+id/place_details"
-        android:layout_width="99dp"
-        android:layout_height="193dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/seekBar"
-        android:text="TextView" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="62dp"

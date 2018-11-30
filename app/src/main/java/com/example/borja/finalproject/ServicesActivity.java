@@ -41,6 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class ServicesActivity extends Activity {
     @SuppressLint("StaticFieldLeak")
     private static ExpandableListView expandableListView;
@@ -60,6 +61,8 @@ public class ServicesActivity extends Activity {
     JSONObject walkinginfo;
     String time;
     String distance;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,14 @@ public class ServicesActivity extends Activity {
             destino_long = extras.getDouble("destino_lon");
         }
 
-        //DownloadApiInfo api = new DownloadApiInfo();
-        //api.execute();
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origen_lat+","+origen_long+"&destinations="+destino_lat+","+destino_long+"&mode=walking&key=AIzaSyBl5T6cMmQC0Zxi8rY1lXW1KH2sFJkCb6Y&";
+        BackgroundTask bt = new BackgroundTask();
+        bt.execute(url);
+
+        //uberInfo();
+
+
+
         try {
             lyftInfo(new RevealServiceCallbacks() {
                 @Override
@@ -107,28 +116,6 @@ public class ServicesActivity extends Activity {
     }
 
 
-    /*public class DownloadApiInfo extends AsyncTask<Void,Void,Service> {
-
-
-        protected void onPreExecute(){
-            pr = (ProgressBar)findViewById(R.id.progressBar3);
-            //pr.isShown();
-        }
-
-        //@Override
-        protected Service doInBackground(Void... voids) {
-            svLyft = lyftInfo();
-            Log.d("lyftInfo background", "Price: " + svLyft.getServicePrice());
-            return svLyft;
-        }
-
-        protected void onPostExecute(Service svx){
-            Log.d("lyftInfo PostExecute", "Price: " + svx.getServicePrice());
-            setItems(svx);
-            setListener();
-            pr.setVisibility(View.INVISIBLE);
-        }
-    }*/
 
     // Setting headers and childs to expandable listview
     void setItems(Service svLyft) {
@@ -204,10 +191,10 @@ public class ServicesActivity extends Activity {
 
         }
         // Adding child data
-        String sN5 = "Walking";
+        String sT5 = "Time: "+ time;
         int sL5 = R.drawable.walking_32;
-        String sT5 = distance;
-        String sP5 = "Free";
+        String sN5 = "Distance "+distance;
+        String sP5 = "Free & Healthy";
         Service sv5 = new Service(sN5, sL5, sT5, sP5);
 
         child4.add(sv5);
@@ -299,7 +286,8 @@ public class ServicesActivity extends Activity {
 
         //Get driver estimated time of arrival for a location.
 
-        Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(41.949740, -87.652110, "lyft");
+        //Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(41.949740, -87.652110, "lyft");
+        Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), "lyft");
 
         etaCall.enqueue(new Callback<EtaEstimateResponse>() {
             @Override
@@ -329,8 +317,8 @@ public class ServicesActivity extends Activity {
 
         //Get cost, distance, and duration estimates between two locations.
 
-        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(41.949740, -87.652110, RideTypeEnum.CLASSIC.toString(), 41.925010, -87.659920);
-        //Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), RideTypeEnum.CLASSIC.toString(), destino_lat, destino_long);
+        //Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(41.949740, -87.652110, RideTypeEnum.CLASSIC.toString(), 41.925010, -87.659920);
+        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), RideTypeEnum.CLASSIC.toString(), destino_lat, destino_long);
         costEstimateCall.enqueue(new Callback<CostEstimateResponse>() {
 
             @Override
@@ -359,6 +347,10 @@ public class ServicesActivity extends Activity {
         });
         //Log.d("LyftInfo func return", "price: "+svLyft.getServicePrice());
         //return svLyft;
+    }
+
+    public void uberInfo(){
+
     }
 
     public class BackgroundTask extends AsyncTask<String, Integer, Void> {
@@ -435,6 +427,7 @@ public class ServicesActivity extends Activity {
             }
             try {
                 distance = distanceObj.getString("text");
+                Log.d("JSON","Distance: "+distance);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

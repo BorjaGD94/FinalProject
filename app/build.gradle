@@ -40,4 +40,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:16.0.0'
 
     implementation 'com.lyft:lyft-android-sdk:1.0.3'
+    implementation 'com.uber.sdk:rides-android:0.5.3'
+    implementation 'com.neno0o.ubersdk:ubersdk:0.2'
 }
