@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     double longitude =loc.getLongitude();
                     intent.putExtra("Location", loc);
                     */
-                    Log.d("latitude", Double.toString(latitude));
-                    intent.putExtra("Latitude", Double.toString(latitude));
-                  intent.putExtra("longitude", Double.toString(longitud));
+                   // Log.d("latitude", latitude);
+                    intent.putExtra("Latitude", latitude);
+                  intent.putExtra("longitude", longitud);
 
                     startActivity(intent);
                     return true;

@@ -47,8 +47,8 @@ public class ServicesActivity extends Activity {
     private static ExpandableListView expandableListView;
     @SuppressLint("StaticFieldLeak")
     private static ExpandableListAdapter adapter;
-    private String origen_lat;
-    private String origen_long;
+    private double origen_lat;
+    private double origen_long;
     private double destino_lat;
     private double destino_long;
 
@@ -59,8 +59,11 @@ public class ServicesActivity extends Activity {
 
 
     JSONObject walkinginfo;
+    JSONObject bikeinfo;
     String time;
     String distance;
+    String time_bike;
+    String distance_bike;
 
 
 
@@ -80,15 +83,17 @@ public class ServicesActivity extends Activity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            origen_lat = extras.getString("origen_lat");
-            origen_long = extras.getString("origen_long");
+            origen_lat = extras.getDouble("origen_lat");
+            origen_long = extras.getDouble("origen_long");
             destino_lat = extras.getDouble("destino_lat");
             destino_long = extras.getDouble("destino_lon");
+
         }
 
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origen_lat+","+origen_long+"&destinations="+destino_lat+","+destino_long+"&mode=walking&key=AIzaSyBl5T6cMmQC0Zxi8rY1lXW1KH2sFJkCb6Y&";
+        String url_bike = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origen_lat+","+origen_long+"&destinations="+destino_lat+","+destino_long+"&mode=bicycling&key=AIzaSyBl5T6cMmQC0Zxi8rY1lXW1KH2sFJkCb6Y&";
         BackgroundTask bt = new BackgroundTask();
-        bt.execute(url);
+        bt.execute(url,url_bike);
 
         //uberInfo();
 
@@ -151,19 +156,19 @@ public class ServicesActivity extends Activity {
         int serviceLogo = R.drawable.uber_32;
         String serviceTime = "Waiting time: 8 - 10 minutes";
         String servicePrice = "$8 - $11";
-        Service sv = new Service(serviceName,serviceLogo,serviceTime,servicePrice);
+        Service sv = new Service(serviceName, serviceLogo, serviceTime, servicePrice);
 
         String sN1 = "Lyft";
         int sL1 = R.drawable.lyft_32;
         String sT1 = svLyft.getServiceTime();
         String sP1 = svLyft.getServicePrice();
-        Service sv1 = new Service(sN1,sL1,sT1,sP1);
+        Service sv1 = new Service(sN1, sL1, sT1, sP1);
 
         String sN2 = "Via";
         int sL2 = R.drawable.via_32;
         String sT2 = "Waiting time: 8 - 10 minutes";
         String sP2 = "$8 - $11";
-        Service sv2 = new Service(sN2,sL2,sT2,sP2);
+        Service sv2 = new Service(sN2, sL2, sT2, sP2);
 
         child1.add(sv);
         child1.add(sv1);
@@ -173,31 +178,40 @@ public class ServicesActivity extends Activity {
         int sL3 = R.drawable.car2go;
         String sT3 = "Walking time: 4 minutes";
         String sP3 = "$8 - $11";
-        Service sv3 = new Service(sN3,sL3,sT3,sP3);
+        Service sv3 = new Service(sN3, sL3, sT3, sP3);
 
         String sN4 = "ZityCar";
         int sL4 = R.drawable.zitycar;
         String sT4 = "Walking time: 4 minutes";
         String sP4 = "$8 - $11";
-        Service sv4 = new Service(sN4,sL4,sT4,sP4);
+        Service sv4 = new Service(sN4, sL4, sT4, sP4);
 
         // Adding child data
         child2.add(sv3);
         child2.add(sv4);
 
         // Adding child data
-        for (int i = 1; i < 6; i++) {
-            //child3.add("Group 3  - " + " : Child" + i);
+        String sT5 = "Time: " + time_bike;
+        int sL5 = R.drawable.divvy_logo;
+        String sN5 = "Distance " + distance_bike;
 
-        }
-        // Adding child data
-        String sT5 = "Time: "+ time;
-        int sL5 = R.drawable.walking_32;
-        String sN5 = "Distance "+distance;
-        String sP5 = "Free & Healthy";
+        String sP5;
+        String numero = time_bike.replaceAll("[^0-9]", "");
+        if (Integer.parseInt(numero) <= 30) {
+            sP5 = "$3.00";
+        } else sP5 = "$15.00";
         Service sv5 = new Service(sN5, sL5, sT5, sP5);
 
-        child4.add(sv5);
+        child3.add(sv5);
+
+        // Adding child data
+        String sT6 = "Time: " + time;
+        int sL6 = R.drawable.walking_32;
+        String sN6 = "Distance " + distance;
+        String sP6 = "Free & Healthy";
+        Service sv6 = new Service(sN6, sL6, sT6, sP6);
+
+        child4.add(sv6);
 
         // Adding header and childs to hash map
         hashMap.put(header.get(0), child1);
@@ -287,7 +301,7 @@ public class ServicesActivity extends Activity {
         //Get driver estimated time of arrival for a location.
 
         //Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(41.949740, -87.652110, "lyft");
-        Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), "lyft");
+        Call<EtaEstimateResponse> etaCall = lyftPublicApi.getEtas(origen_lat, origen_long, "lyft");
 
         etaCall.enqueue(new Callback<EtaEstimateResponse>() {
             @Override
@@ -318,7 +332,7 @@ public class ServicesActivity extends Activity {
         //Get cost, distance, and duration estimates between two locations.
 
         //Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(41.949740, -87.652110, RideTypeEnum.CLASSIC.toString(), 41.925010, -87.659920);
-        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(Double.parseDouble(origen_lat), Double.parseDouble(origen_long), RideTypeEnum.CLASSIC.toString(), destino_lat, destino_long);
+        Call<CostEstimateResponse> costEstimateCall = lyftPublicApi.getCosts(origen_lat, origen_long, RideTypeEnum.CLASSIC.toString(), destino_lat, destino_long);
         costEstimateCall.enqueue(new Callback<CostEstimateResponse>() {
 
             @Override
@@ -359,10 +373,13 @@ public class ServicesActivity extends Activity {
         @Override
         protected Void doInBackground(String... params) {
             String url;
+            String url_bike;
 
             url = new String(params[0]);
+            url_bike = new String(params[1]);
             try {
                 walkinginfo = JsonReader.readJsonFromUrl(url);
+                bikeinfo = JsonReader.readJsonFromUrl(url_bike);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -390,49 +407,63 @@ public class ServicesActivity extends Activity {
 */
 
             JSONArray jsonObject1 = null;
+            JSONArray jsonObject1b = null;
             try {
                 jsonObject1 = (JSONArray) walkinginfo.get("rows");
+                jsonObject1b = (JSONArray) bikeinfo.get("rows");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             JSONObject jsonObject2 = null;
+            JSONObject jsonObject2b = null;
             try {
                 jsonObject2 = (JSONObject) jsonObject1.get(0);
+                jsonObject2b = (JSONObject) jsonObject1b.get(0);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             JSONArray jsonObject3 = null;
+            JSONArray jsonObject3b = null;
             try {
                 jsonObject3 = (JSONArray) jsonObject2.get("elements");
+                jsonObject3b = (JSONArray) jsonObject2b.get("elements");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             JSONObject elementObj = null;
+            JSONObject elementObjb = null;
             try {
                 elementObj = (JSONObject) jsonObject3.get(0);
+                elementObjb = (JSONObject) jsonObject3b.get(0);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             JSONObject distanceObj = null;
+            JSONObject distanceObjb = null;
             try {
                 distanceObj = (JSONObject) elementObj.get("distance");
+                distanceObjb = (JSONObject) elementObjb.get("distance");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             JSONObject timeObj = null;
+            JSONObject timeObjb = null;
             try {
                 timeObj = (JSONObject) elementObj.get("duration");
+                timeObjb = (JSONObject) elementObjb.get("duration");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             try {
                 distance = distanceObj.getString("text");
+                distance_bike = distanceObjb.getString("text");
                 Log.d("JSON","Distance: "+distance);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             try {
                 time = timeObj.getString("text");
+                time_bike = timeObjb.getString("text");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

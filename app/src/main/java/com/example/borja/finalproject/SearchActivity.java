@@ -19,6 +19,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,13 +37,15 @@ public class SearchActivity extends AppCompatActivity {
     String origen;
     String destino = "B";
 
-    String latitude;
-    String longitud;
+    Double latitude;
+    Double longitud;
     Double  destino_lat;
     Double  destino_long;
     TextView origentxt;
     JSONObject dirOri = null;
     int estado;
+
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -53,8 +56,8 @@ public class SearchActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            latitude = extras.getString("Latitude");
-            longitud = extras.getString("longitude");
+            latitude = extras.getDouble("Latitude");
+            longitud = extras.getDouble("longitude");
 
             String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitud + "&key=AIzaSyBl5T6cMmQC0Zxi8rY1lXW1KH2sFJkCb6Y";
             BackgroundTask bt = new BackgroundTask();
@@ -145,6 +148,8 @@ public class SearchActivity extends AppCompatActivity {
                         origentxt.setText("");
                         origentxt.setText(place.getAddress().toString());
                         origen=place.getAddress().toString();
+                        latitude =place.getLatLng().latitude;
+                        longitud=place.getLatLng().longitude;
                         break;
                     case 2:
                         destinotxt.setText(place.getAddress().toString());
