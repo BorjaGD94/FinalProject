@@ -149,6 +149,8 @@ public class SearchActivity extends AppCompatActivity {
                     case 2:
                         destinotxt.setText(place.getAddress().toString());
                         destino=place.getAddress().toString();
+                        destino_lat=place.getLatLng().latitude;
+                        destino_long=place.getLatLng().longitude;
                         break;
                     case 3:
                         break;
