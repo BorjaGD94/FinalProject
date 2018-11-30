@@ -16,7 +16,6 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lyft.lyftbutton.RideTypeEnum;
@@ -145,11 +144,11 @@ public class ServicesActivity extends Activity {
         header.add("Bike Sharing");
         header.add("Walking");
 
-        try {
+        /*try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // Adding child data
         String serviceName = "Uber";
@@ -236,9 +235,9 @@ public class ServicesActivity extends Activity {
             public boolean onGroupClick(ExpandableListView listview, View view,
                                         int group_pos, long id) {
 
-                Toast.makeText(ServicesActivity.this,
-                        "You clicked : " + adapter.getGroup(group_pos),
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(ServicesActivity.this,
+                  //      "You clicked : " + adapter.getGroup(group_pos),
+                    //    Toast.LENGTH_LONG).show();
                 return false;
             }
         });
@@ -275,10 +274,10 @@ public class ServicesActivity extends Activity {
                     startActivity(intent);
                 }
 
-                Toast.makeText(
-                        ServicesActivity.this,
-                        "You clicked : " + adapter.getChild(groupPos, childPos),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(
+                  //      ServicesActivity.this,
+                    //    "You clicked : " + adapter.getChild(groupPos, childPos),
+                      //  Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
