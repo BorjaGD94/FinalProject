@@ -33,7 +33,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +55,11 @@ public class ServicesActivity extends Activity {
 
     Service svLyft = new Service();
 
+    String uber_high_price_estimate;
+    String uber_low_price_estimate;
+    String uber_price_estimate;
+    String uber_eta;
+
     ProgressBar pr;
     TextView tx;
 
@@ -62,7 +71,7 @@ public class ServicesActivity extends Activity {
     String time_bike;
     String distance_bike;
 
-
+    AtomicInteger numCompleted = new AtomicInteger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +101,68 @@ public class ServicesActivity extends Activity {
         BackgroundTask bt = new BackgroundTask();
         bt.execute(url,url_bike);
 
-        //uberInfo();
+        try {
+            uberPriceInfo(new RevealServiceCallbacksUber() {
+                @Override
+                public void onSuccess(@NonNull String string) {
+                    final ObjectMapper mapper = new ObjectMapper();
 
+                    try {
+                        UberPriceJSON real = mapper.readValue(string, UberPriceJSON.class);
+                        for(int i=0; i<real.prices.length; i++){
+                            if(real.prices[i].display_name.equals("UberX")){
+                                uber_high_price_estimate = Integer.toString(real.prices[i].high_estimate);
+                                uber_low_price_estimate = Integer.toString(real.prices[i].low_estimate);
+                                uber_price_estimate = "$"+uber_low_price_estimate+" - "+"$"+uber_high_price_estimate;
+                                numCompleted.incrementAndGet();
+                                Log.d("Atomic uber_p: ",numCompleted.toString());
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(@NonNull Throwable throwable) {
+
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            uberEtaInfo(new RevealServiceCallbacksUber() {
+                @Override
+                public void onSuccess(@NonNull String string) {
+                    final ObjectMapper mapper = new ObjectMapper();
+
+                    try {
+                        UberEtaJSON real = mapper.readValue(string, UberEtaJSON.class);
+                        for(int i=0; i<real.times.length; i++){
+                            if(real.times[i].display_name.equals("UberX")){
+                                Integer num = (real.times[i].estimate)/60;
+                                uber_eta = Integer.toString(num);
+                                numCompleted.incrementAndGet();
+                                Log.d("Atomic uber_eta: ",numCompleted.toString());
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onError(@NonNull Throwable throwable) {
+
+                }
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         try {
@@ -102,7 +171,9 @@ public class ServicesActivity extends Activity {
                 public void onSuccess(@NonNull Service service) {
                     pr.setVisibility(View.INVISIBLE);
                     tx.setVisibility(View.INVISIBLE);
-                    setItems(service);
+                    numCompleted.incrementAndGet();
+                    Log.d("Atomic lyft: ",numCompleted.toString());
+                    setItems();
                     setListener();
                 }
 
@@ -119,8 +190,11 @@ public class ServicesActivity extends Activity {
 
 
 
+
     // Setting headers and childs to expandable listview
-    void setItems(Service svLyft) {
+    void setItems() {
+
+
 
         // Array list for header
         ArrayList<String> header = new ArrayList<String>();
@@ -148,11 +222,20 @@ public class ServicesActivity extends Activity {
             e.printStackTrace();
         }*/
 
+        if (numCompleted.toString().equals("3")){
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            setItems();
+        }
+
         // Adding child data
         String serviceName = "Uber";
         int serviceLogo = R.drawable.uber_32;
-        String serviceTime = "Waiting time: 8 - 10 minutes";
-        String servicePrice = "$8 - $11";
+        String serviceTime = "Waiting Time:  "+uber_eta+" minutes";
+        String servicePrice = uber_price_estimate;
         Service sv = new Service(serviceName, serviceLogo, serviceTime, servicePrice);
 
         String sN1 = "Lyft";
@@ -163,7 +246,7 @@ public class ServicesActivity extends Activity {
 
         String sN2 = "Via";
         int sL2 = R.drawable.via_32;
-        String sT2 = "Waiting time: 8 - 10 minutes";
+        String sT2 = "Waiting Time:  8 minutes";
         String sP2 = "$8 - $11";
         Service sv2 = new Service(sN2, sL2, sT2, sP2);
 
@@ -173,13 +256,13 @@ public class ServicesActivity extends Activity {
 
         String sN3 = "Car2Go";
         int sL3 = R.drawable.car2go;
-        String sT3 = "Walking time: 4 minutes";
+        String sT3 = "Walking Time:  4 minutes";
         String sP3 = "$8 - $11";
         Service sv3 = new Service(sN3, sL3, sT3, sP3);
 
         String sN4 = "ZityCar";
         int sL4 = R.drawable.zitycar;
-        String sT4 = "Walking time: 4 minutes";
+        String sT4 = "Walking Time:  4 minutes";
         String sP4 = "$8 - $11";
         Service sv4 = new Service(sN4, sL4, sT4, sP4);
 
@@ -307,10 +390,10 @@ public class ServicesActivity extends Activity {
                 for(Eta eta : result.eta_estimates) {
                     Log.d("MyApp", "ETA for " + eta.ride_type + ": " + (eta.eta_seconds/60) + " min");
                     if ((eta.eta_seconds/60) == 1) {
-                        svLyft.setServiceTime("Waiting Time: " + Integer.toString(eta.eta_seconds / 60) + " minute");
+                        svLyft.setServiceTime("Waiting Time:  " + Integer.toString(eta.eta_seconds / 60) + " minute");
                     }
                     else {
-                        svLyft.setServiceTime("Waiting Time: " + Integer.toString(eta.eta_seconds / 60) + " minutes");
+                        svLyft.setServiceTime("Waiting Time:  " + Integer.toString(eta.eta_seconds / 60) + " minutes");
                     }
                     if (callbacks != null)
                         callbacks.onSuccess(svLyft);
@@ -360,8 +443,80 @@ public class ServicesActivity extends Activity {
         //return svLyft;
     }
 
-    public void uberInfo(){
+    public interface RevealServiceCallbacksUber {
+        void onSuccess(@NonNull String string);
 
+        void onError(@NonNull Throwable throwable);
+    }
+
+    public void uberEtaInfo(@Nullable final RevealServiceCallbacksUber callbacks) throws InterruptedException{
+
+        OkHttpClient client = new OkHttpClient();
+
+
+        Request request = new Request.Builder()
+                .url("https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075")
+                .get()
+                .addHeader("Accept-Language", "en-US")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAG8AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAkAAAABwAAAAEAAAAEAAAAPQMWHymBZmztqSqJJZz6WRsAAAA0k-JEnliok6HEjoeFAz8vM8UsZGeC3_KQcxQLo20pMvwL9_NGMNoz6Tb0tVLR1LFnpKJW_9udc3vaEIj3hvpzGNuG0DahI1fH9JKy_AJpixHO0mcztZkVMJyT5qT191ahpriBSkCox3nfTJFDAAAAEv63fw6PHb8e6ZTlSQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("Postman-Token", "44049820-286e-4dac-ae84-d656dc3a6093")
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    /*Headers responseHeaders = response.headers();
+                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    }*/
+
+                    //System.out.println(responseBody.string());
+                    //System.out.println(responseBody.toString());
+                    if (callbacks != null)
+                        callbacks.onSuccess(responseBody.string());
+
+                }
+            }
+        });
+
+    }
+
+    public void uberPriceInfo(@Nullable final RevealServiceCallbacksUber callbacks) throws InterruptedException {
+        OkHttpClient client1 = new OkHttpClient();
+
+        Request request1 = new Request.Builder()
+                .url("https://api.uber.com/v1.2/estimates/price?start_latitude=37.7752315&start_longitude=-122.418075&end_latitude=37.7752415&end_longitude=-122.518075")
+                .get()
+                .addHeader("Accept-Language", "en-US")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer JA.VUNmGAAAAAAAEgASAAAABwAIAAwAAAAAAAAAEgAAAAAAAAG8AAAAFAAAAAAADgAQAAQAAAAIAAwAAAAOAAAAkAAAABwAAAAEAAAAEAAAAPQMWHymBZmztqSqJJZz6WRsAAAA0k-JEnliok6HEjoeFAz8vM8UsZGeC3_KQcxQLo20pMvwL9_NGMNoz6Tb0tVLR1LFnpKJW_9udc3vaEIj3hvpzGNuG0DahI1fH9JKy_AJpixHO0mcztZkVMJyT5qT191ahpriBSkCox3nfTJFDAAAAEv63fw6PHb8e6ZTlSQAAABiMGQ4NTgwMy0zOGEwLTQyYjMtODA2ZS03YTRjZjhlMTk2ZWU")
+                .addHeader("cache-control", "no-cache")
+                .addHeader("Postman-Token", "b6647fde-7ba5-44e8-a1df-88a8ec408f8f")
+                .build();
+
+        client1.newCall(request1).enqueue(new okhttp3.Callback() {
+            @Override public void onFailure(okhttp3.Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    if (callbacks != null)
+                        callbacks.onSuccess(responseBody.string());
+
+                }
+            }
+        });
     }
 
     public class BackgroundTask extends AsyncTask<String, Integer, Void> {
@@ -389,8 +544,6 @@ public class ServicesActivity extends Activity {
 
         protected void onPostExecute(Void result) {
             final ObjectMapper mapper = new ObjectMapper();
-
-
 
             try {
                 GoogleDistanceMatrixApiResponse real = mapper.readValue(walkinginfo.toString(), GoogleDistanceMatrixApiResponse.class);
