@@ -2,7 +2,6 @@ package com.example.borja.finalproject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
@@ -27,7 +26,6 @@ import com.lyft.networking.apiObjects.Eta;
 import com.lyft.networking.apiObjects.EtaEstimateResponse;
 import com.lyft.networking.apis.LyftPublicApi;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -267,12 +265,12 @@ public class ServicesActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView listview, View view,
                                         int groupPos, int childPos, long id) {
-                if ((groupPos == 3) && (childPos == 0)) {
-                    Intent intent = new Intent(ServicesActivity.this, MapsActivity.class);
+              //  if ((groupPos == 3) && (childPos == 0)) {
+                //    Intent intent = new Intent(ServicesActivity.this, MapsActivity.class);
                     //intent.putExtra("origen", origen);
                     //intent.putExtra("destino", destino);
-                    startActivity(intent);
-                }
+                  //  startActivity(intent);
+                //}
 
                 //Toast.makeText(
                   //      ServicesActivity.this,
@@ -392,20 +390,27 @@ public class ServicesActivity extends Activity {
         protected void onPostExecute(Void result) {
             final ObjectMapper mapper = new ObjectMapper();
 
-            String des = walkinginfo.toString();
-            Log.d("String:", des);
 
 
-/* forma bonita
-                Gson gson= null;
-                GoogleDistanceMatrixApiResponse response = mapper.readValue(des, GoogleDistanceMatrixApiResponse.class);
-                GoogleDistanceMatrixApiResponse response2 = gson.fromJson(walking, GoogleDistanceMatrixApiResponse.class);
-                distance = response.getRows().get(0).getElements().get(0).getDistance().getText();
-                distance = response2.getRows().get(0).getElements().get(0).getDistance().getText();
+            try {
+                GoogleDistanceMatrixApiResponse real = mapper.readValue(walkinginfo.toString(), GoogleDistanceMatrixApiResponse.class);
+                distance = real.rows.get(0).elements.get(0).distance.text;
+                //distance = real.rows.get(0).elements.get(0).distance.text;
+                time = real.rows.get(0).elements.get(0).duration.text;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-*/
+            try {
+                GoogleDistanceMatrixApiResponse real1 = mapper.readValue(bikeinfo.toString(), GoogleDistanceMatrixApiResponse.class);
+                distance_bike = real1.rows.get(0).elements.get(0).distance.text;
+                time_bike = real1.rows.get(0).elements.get(0).duration.text;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            JSONArray jsonObject1 = null;
+
+            /*JSONArray jsonObject1 = null;
             JSONArray jsonObject1b = null;
             try {
                 jsonObject1 = (JSONArray) walkinginfo.get("rows");
@@ -465,7 +470,7 @@ public class ServicesActivity extends Activity {
                 time_bike = timeObjb.getString("text");
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }
     }

@@ -19,7 +19,6 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -200,7 +199,7 @@ public class SearchActivity extends AppCompatActivity {
             final ObjectMapper mapper = new ObjectMapper();
 
             String des = dirOri.toString();
-            Log.d("String:", des);
+            Log.d("String:", des.toString());
             try {
                 GoogleGeoCodeResponse result1 = mapper.readValue(des, GoogleGeoCodeResponse.class);
                 origen = result1.results[0].formatted_address;

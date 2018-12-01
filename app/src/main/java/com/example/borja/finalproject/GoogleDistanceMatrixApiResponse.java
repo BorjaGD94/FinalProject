@@ -1,10 +1,22 @@
 package com.example.borja.finalproject;
 
+
 import java.util.List;
 
 public class GoogleDistanceMatrixApiResponse {
 
-    List<Rows> rows;
+    public List<String> destination_addresses = null;
+    public List<String> origin_addresses = null;
+    public List<Row> rows = null;
+    public String status;
+
+}
+
+
+
+
+
+   /* List<Rows> rows;
     private List<String> destination_addresses;
     private List<String> origin_addresses;
 
@@ -69,4 +81,4 @@ public class GoogleDistanceMatrixApiResponse {
         }
 
     }
-}
+}*/
