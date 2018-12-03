@@ -455,7 +455,7 @@ public class ServicesActivity extends Activity {
 
 
         Request request = new Request.Builder()
-                .url("https://api.uber.com/v1.2/estimates/time?start_latitude=37.7752315&start_longitude=-122.418075")
+                .url("https://api.uber.com/v1.2/estimates/time?start_latitude="+origen_lat+"&start_longitude="+origen_long+"")
                 .get()
                 .addHeader("Accept-Language", "en-US")
                 .addHeader("Content-Type", "application/json")
@@ -493,7 +493,7 @@ public class ServicesActivity extends Activity {
         OkHttpClient client1 = new OkHttpClient();
 
         Request request1 = new Request.Builder()
-                .url("https://api.uber.com/v1.2/estimates/price?start_latitude=37.7752315&start_longitude=-122.418075&end_latitude=37.7752415&end_longitude=-122.518075")
+                .url("https://api.uber.com/v1.2/estimates/price?start_latitude="+origen_lat+"&start_longitude="+origen_long+"&end_latitude="+destino_lat+"&end_longitude="+destino_long+"")
                 .get()
                 .addHeader("Accept-Language", "en-US")
                 .addHeader("Content-Type", "application/json")
