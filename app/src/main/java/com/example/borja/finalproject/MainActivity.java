@@ -66,18 +66,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    /*Location loc = getDeviceLocation();
-                    double latitude =loc.getLatitude();
-                    double longitude =loc.getLongitude();
-                    intent.putExtra("Location", loc);
-                    */
-                   // Log.d("latitude", latitude);
-                    intent.putExtra("Latitude", latitude);
-                  intent.putExtra("longitude", longitud);
+                    if (latitude!=0 & longitud!=0) {
 
-                    startActivity(intent);
-                    return true;
+                        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                        intent.putExtra("Latitude", latitude);
+                        intent.putExtra("longitude", longitud);
+
+                        startActivity(intent);
+                        return true;
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Location is not " +
+                                "retrieved, activate locations services " +
+                                "for this app",Toast.LENGTH_LONG);
+                    }
                 }
                 return false;
 
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Location getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
-        Location currentLocation = null;
+        Location currentLocation;
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
