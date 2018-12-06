@@ -28,10 +28,11 @@ import java.io.IOException;
 public class SearchActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    private SqlHelper db;
     private TextView mPlaceDetailsText;
-    private EditText destinotxt;
-    private EditText hometext;
-    private EditText oritext;
+    EditText destinotxt;
+    private EditText hometxt;
+    private EditText worktxt;
 
     String origen;
     String destino = "B";
@@ -46,6 +47,8 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,20 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         Bundle extras = getIntent().getExtras();
+        db = new SqlHelper(this);
 
+        String home = db.getHome().toString();
+        if(home != "0") {
+            hometxt = findViewById(R.id.home);
+            hometxt.setText(home);
+        }
+
+
+        String work= db.getWork().toString();
+        if(work != "0") {
+            worktxt = findViewById(R.id.work);
+            worktxt.setText(work);
+        }
         if (extras != null) {
             latitude = extras.getDouble("Latitude");
             longitud = extras.getDouble("longitude");
@@ -63,6 +79,23 @@ public class SearchActivity extends AppCompatActivity {
             bt.execute(url);
 
         }
+
+        //origen autocomple
+        origentxt = findViewById(R.id.ori);
+        origentxt.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openAutocompleteActivity();
+                    origentxt.setText("");
+                    estado = 1 ;
+                    return true;
+                }
+                return false;
+
+            }
+        });
 
         //autocompleteactivity destino
 
@@ -83,17 +116,50 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        //origen autocomple
-        origentxt = findViewById(R.id.ori);
-        origentxt.setOnTouchListener(new View.OnTouchListener() {
+
+
+        //work autocomplete
+        worktxt = findViewById(R.id.work);
+        worktxt.setOnTouchListener(new View.OnTouchListener() {
+
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    openAutocompleteActivity();
-                    origentxt.setText("");
-                    estado = 1 ;
+                    if (worktxt.getText().length() == 0) {
+                        openAutocompleteActivity();
+                        estado = 4;
+                    } else {
+                        destinotxt.setText(worktxt.getText().toString());
+                        destino_lat = Double.parseDouble(db.getlat("work"));
+                        destino_long = Double.parseDouble(db.getlong("work"));
+                }
                     return true;
+                }
+                return false;
+
+            }
+        });
+
+        //home autocompete
+        hometxt= findViewById(R.id.home);
+        hometxt.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(hometxt.getText().length() == 0) {
+                        openAutocompleteActivity();
+                        estado = 3;
+                    }
+                    else {
+                        //destino = db.getHome();
+                        destinotxt.setText(hometxt.getText().toString());
+                        destino_lat = Double.parseDouble(db.getlat("home"));
+                        destino_long= Double.parseDouble(db.getlong("home"));
+                    }
+                     return true;
                 }
                 return false;
 
@@ -104,6 +170,8 @@ public class SearchActivity extends AppCompatActivity {
         //mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
         destinotxt = findViewById(R.id.des);
         origentxt = findViewById(R.id.ori);
+        hometxt = findViewById(R.id.home);
+        worktxt = findViewById(R.id.work);
 
     }
 
@@ -157,8 +225,25 @@ public class SearchActivity extends AppCompatActivity {
                         destino_long=place.getLatLng().longitude;
                         break;
                     case 3:
+                        hometxt.setText(place.getAddress().toString());
+                        String adress = place.getAddress().toString();
+                        String lat = Double.toString(place.getLatLng().latitude);
+                        String log = Double.toString(place.getLatLng().longitude);
+                        String type = "home";
+                        destinotxt.setText(place.getAddress().toString());
+                        Adress home = new Adress(adress,lat, log, type);
+                        db.addPlace(home);
+
                         break;
                     case 4:
+                        worktxt.setText(place.getAddress().toString());
+                        String adressw = place.getAddress().toString();
+                        String latw = Double.toString(place.getLatLng().latitude);
+                        String logw = Double.toString(place.getLatLng().longitude);
+                        String typew = "home";
+                        destinotxt.setText(place.getAddress().toString());
+                        Adress homew = new Adress(adressw,latw, logw, typew);
+                        db.addPlace(homew);
                 } //end switch
 
            //mPlaceDetailsText.setText(destino+","+ origen);
