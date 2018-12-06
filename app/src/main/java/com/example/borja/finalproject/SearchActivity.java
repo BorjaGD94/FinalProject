@@ -118,29 +118,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-        //work autocomplete
-        worktxt = findViewById(R.id.work);
-        worktxt.setOnTouchListener(new View.OnTouchListener() {
-
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (worktxt.getText().length() == 0) {
-                        openAutocompleteActivity();
-                        estado = 4;
-                    } else {
-                        destinotxt.setText(worktxt.getText().toString());
-                        destino_lat = Double.parseDouble(db.getlat("work"));
-                        destino_long = Double.parseDouble(db.getlong("work"));
-                }
-                    return true;
-                }
-                return false;
-
-            }
-        });
-
         //home autocompete
         hometxt= findViewById(R.id.home);
         hometxt.setOnTouchListener(new View.OnTouchListener() {
@@ -160,6 +137,29 @@ public class SearchActivity extends AppCompatActivity {
                         destino_long= Double.parseDouble(db.getlong("home"));
                     }
                      return true;
+                }
+                return false;
+
+            }
+        });
+
+        //work autocomplete
+        worktxt = findViewById(R.id.work);
+        worktxt.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (worktxt.getText().length() == 0) {
+                        openAutocompleteActivity();
+                        estado = 4;
+                    } else {
+                        destinotxt.setText(worktxt.getText().toString());
+                        destino_lat = Double.parseDouble(db.getlat("work"));
+                        destino_long = Double.parseDouble(db.getlong("work"));
+                    }
+                    return true;
                 }
                 return false;
 
@@ -233,6 +233,8 @@ public class SearchActivity extends AppCompatActivity {
                         destinotxt.setText(place.getAddress().toString());
                         Adress home = new Adress(adress,lat, log, type);
                         db.addPlace(home);
+                        destino_lat =place.getLatLng().latitude;
+                        destino_long=place.getLatLng().longitude;
 
                         break;
                     case 4:
@@ -240,10 +242,13 @@ public class SearchActivity extends AppCompatActivity {
                         String adressw = place.getAddress().toString();
                         String latw = Double.toString(place.getLatLng().latitude);
                         String logw = Double.toString(place.getLatLng().longitude);
-                        String typew = "home";
+                        String typew = "work";
                         destinotxt.setText(place.getAddress().toString());
                         Adress homew = new Adress(adressw,latw, logw, typew);
                         db.addPlace(homew);
+                        destino_lat =place.getLatLng().latitude;
+                        destino_long=place.getLatLng().longitude;
+
                 } //end switch
 
            //mPlaceDetailsText.setText(destino+","+ origen);
