@@ -233,8 +233,7 @@ public class SearchActivity extends AppCompatActivity {
     }
    //change activity.
     public void onClick(View view) {
-
-        if (destinotxt != null && origentxt != null) {
+        if (destinotxt.getText().length() != 0 && origentxt != null) {
             Intent intent = new Intent(SearchActivity.this, ServicesActivity.class);
                 intent.putExtra("origen", origen );
                 intent.putExtra("destino", destino);
@@ -245,6 +244,10 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent) ;
 
             }
+         else {
+            Toast.makeText(SearchActivity.this, "You are missig one of your" +
+                    " fields",Toast.LENGTH_SHORT).show();
+        }
 
     }
 
