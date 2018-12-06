@@ -144,19 +144,6 @@
         android:textAlignment="center"
         android:textColor="#000000" />
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="193dp"
-        android:layout_alignEnd="@+id/pas"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-249dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </HorizontalScrollView>
-
     <EditText
         android:id="@+id/editText9"
         android:layout_width="wrap_content"
@@ -199,7 +186,7 @@
         android:layout_marginTop="104dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Choose an destination"/>
+        android:hint="Choose a destination"/>
 
     <Button
         android:id="@+id/button"
@@ -210,6 +197,22 @@
         android:layout_marginEnd="16dp"
         android:text="Go"
         android:onClick="onClick"/>
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignBottom="@+id/imageView4"
+        android:layout_alignStart="@+id/button"
+        app:srcCompat="@drawable/pencil_edit_button" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignBottom="@+id/imageView6"
+        android:layout_alignStart="@+id/button"
+        app:srcCompat="@drawable/pencil_edit_button" />
 
 
 </RelativeLayout>

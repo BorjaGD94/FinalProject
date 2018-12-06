@@ -27,17 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-/**
- * This demo shows how GMS Location can be used to check for changes to the users location.  The
- * "My Location" button uses GMS Location to set the blue dot representing the users location.
- * Permission for {@link Manifest.permission#ACCESS_FINE_LOCATION} is requested at run
- * time. If the permission has not been granted, the Activity is finished with an error message.
- */
-
-/**
- * Created by User on 10/2/2017.
- */
-
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     double latitude =0;
@@ -45,12 +34,48 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
+
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
         if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+
+            Log.d(TAG, "getDeviceLocation: getting the devices current location");
+            Location currentLocation;
+            mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+            try{
+                if(mLocationPermissionsGranted){
+
+                    final Task location = mFusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                Log.d(TAG, "onComplete: found location!");
+                                Location currentLocation = (Location) task.getResult();
+
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                        DEFAULT_ZOOM);
+                                latitude = currentLocation.getLatitude();
+                                longitud = currentLocation.getLongitude();
+
+                            }else{
+                                Log.d(TAG, "onComplete: current location is null");
+                                Toast.makeText(MainActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Location is not " +
+                            "retrieved, activate locations services " +
+                            "for this app",Toast.LENGTH_LONG);
+                }
+            }catch (SecurityException e){
+                Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
+            }
+            //getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -107,39 +132,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         getLocationPermission();
     }
 
-    private Location getDeviceLocation(){
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
-        Location currentLocation;
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        try{
-            if(mLocationPermissionsGranted){
-
-                final Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
-
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM);
-                            latitude = currentLocation.getLatitude();
-                            longitud = currentLocation.getLongitude();
-
-                        }else{
-                            Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(MainActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }catch (SecurityException e){
-            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
-        }
-        return currentLocation;
-    }
 
     private void moveCamera(LatLng latLng, float zoom){
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
@@ -187,6 +179,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     for(int i = 0; i < grantResults.length; i++){
                         if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
                             mLocationPermissionsGranted = false;
+                            Toast.makeText(MainActivity.this, "Location is not " +
+                                    "retrieved, activate locations services " +
+                                    "for this app",Toast.LENGTH_LONG).show();
                             Log.d(TAG, "onRequestPermissionsResult: permission failed");
                             return;
                         }
@@ -199,6 +194,4 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
-
-
 }
