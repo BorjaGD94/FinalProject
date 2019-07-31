@@ -38,12 +38,12 @@ class bounds {
     public location southwest ;
 }
 
-class location{
+class location {
     public String lat ;
     public String lng ;
 }
 
-class address_component{
+class address_component {
     public String long_name;
     public String short_name;
     public String[] types ;

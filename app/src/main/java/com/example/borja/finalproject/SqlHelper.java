@@ -12,17 +12,17 @@ public class SqlHelper extends SQLiteOpenHelper {
 
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "GetThereDB";
 
-    // Books table name
+    // Places table name
     private static final String TABLE_PLACES = "places";
 
-    // Books Table Columns names
+    // Places Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_ADRESS = "adress";
+    private static final String KEY_ADDRESS = "address";
     private static final String KEY_LAT = "lat";
     private static final String KEY_LONG = "long";
     private static final String KEY_TYPE = "type";
@@ -37,12 +37,12 @@ public class SqlHelper extends SQLiteOpenHelper {
         // SQL statement to create places table
         String CREATE_PLACES_TABLE = "CREATE TABLE places ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "adress TEXT, " +
+                "address TEXT, " +
                 "lat TEXT, " +
                 "long TEXT," +
                 "type TEXT )";
 
-        // create books table
+        // create places table
         db.execSQL(CREATE_PLACES_TABLE);
     }
 
@@ -51,7 +51,7 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addPlace(Adress place) {
+    public void addPlace(Address place) {
         Log.d("addplace", place.toString());
 
 
@@ -60,7 +60,7 @@ public class SqlHelper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_ADRESS, place.getAdress()); // get adress
+        values.put(KEY_ADDRESS, place.getAddress()); // get address
         values.put(KEY_LONG, place.getLog()); // get log
         values.put(KEY_LAT, place.getLat()); //get lat
         values.put(KEY_TYPE, place.getType()); //get type
@@ -74,80 +74,6 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /* // Get All Books
-     public List<place> getAllPlaces() {
-         List<Place> books = new LinkedList<Book>();
- 
-         // 1. build the query
-         String query = "SELECT  * FROM " + TABLE_BOOKS;
- 
-         // 2. get reference to writable DB
-         SQLiteDatabase db = this.getWritableDatabase();
-         Cursor cursor = db.rawQuery(query, null);
- 
-         // 3. go over each row, build book and add it to list
-         Book book = null;
- 
- 
- 
-         if (cursor.moveToFirst()) {
-             do {
-                 book = new Book();
-                 book.setId(Integer.parseInt(cursor.getString(0)));
-                 book.setTitle(cursor.getString(1));
-                 book.setAuthor(cursor.getString(2));
-                 book.setRating(cursor.getString(3));
-                 book.setImageName(cursor.getString(4));
- 
-                 // Add book to books
-                 books.add(book);
-             } while (cursor.moveToNext());
-         }
- 
- 
- 
-         Log.d("getAllBooks()", books.toString());
- 
-         return books; // return books
-     }
-     // Updating single book
-     public int updateBook(Book book, String newTitle, String newAuthor) {
- 
-         // 1. get reference to writable DB
-         SQLiteDatabase db = this.getWritableDatabase();
- 
-         // 2. create ContentValues to add key "column"/value
-         ContentValues values = new ContentValues();
-         values.put("title", newTitle);
-         values.put("author", newAuthor);
- 
- 
-         // 3. updating row
-         int i = db.update(TABLE_BOOKS, //table
-                 values, // column/value
-                 KEY_ID+" = ?", // selections
-                 new String[] { String.valueOf(book.getId()) }); //selection args
-         // 4. close dbase
-         db.close();
-         Log.d("UpdateBook", book.toString());
-         return i;
- 
-     }
- */
-    // Deleting single book
-    public void deleteBook(Adress place) {
-
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. delete
-        db.delete(TABLE_PLACES, KEY_ADRESS + " = ?", new String[]{String.valueOf(place.getAdress())});
-
-        // 3. close
-        db.close();
-
-        Log.d("deleteBook", place.toString());
-    }
 
     public int getIds() {
         String selectQuery = "SELECT id FROM places";
@@ -162,7 +88,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     public String getHome() {
         StringBuilder s = new StringBuilder();
         String home = "home";
-        String selectQuery = "SELECT adress,type FROM places WHERE type ='" + home + "' ";
+        String selectQuery = "SELECT address,type FROM places WHERE type ='" + home + "' ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -173,12 +99,17 @@ public class SqlHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return s.toString();
+    }
+
+    public void deletePlace(String type){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PLACES, KEY_TYPE + "=?", new String[]{type});
     }
 
     public String getWork() {
         StringBuilder s = new StringBuilder();
         String work = "work";
-        String selectQuery = "SELECT adress,type FROM places WHERE type ='" + work + "' ";
+        String selectQuery = "SELECT address,type FROM places WHERE type ='" + work + "' ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -192,9 +123,9 @@ public class SqlHelper extends SQLiteOpenHelper {
     }
 
 
-    public String getlong(String adress) {
+    public String getlong(String address) {
         StringBuilder s = new StringBuilder();
-        String selectQuery = "SELECT long FROM places WHERE type ='" + adress + "' ";
+        String selectQuery = "SELECT long FROM places WHERE type ='" + address + "' ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -209,9 +140,9 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     }
 
-    public String getlat(String adress) {
+    public String getlat(String address) {
         StringBuilder s = new StringBuilder();
-        String selectQuery = "SELECT lat FROM places WHERE type ='" + adress + "' ";
+        String selectQuery = "SELECT lat FROM places WHERE type ='" + address + "' ";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {

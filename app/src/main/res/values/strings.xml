@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalProject</string>
+    <string name="app_name">GetThere</string>
     <string name="location_permission_denied" />
     <string name="permission_required_toast" />
     <string name="permission_rationale_location" />
@@ -7,4 +7,5 @@
     <string name="hey_there">Hey There!</string>
     <string name="search">Search for destination</string>
     <string name="ride_sharing">Ride sharing</string>
+    <string name="title_activity_directions">Map</string>
 </resources>

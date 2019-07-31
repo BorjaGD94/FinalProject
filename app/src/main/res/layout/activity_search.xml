@@ -6,33 +6,6 @@
 
 
     <ImageView
-        android:id="@+id/error"
-        android:layout_width="28dp"
-        android:layout_height="24dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/error" />
-
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ori"
-        android:layout_below="@+id/error"
-        android:max="7"
-        android:progress="1" />
-
-    <TextView
-        android:id="@+id/pas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/error"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="116dp"
-        android:text="Passangers" />
-
-    <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editText8"
+        android:layout_alignTop="@+id/work"
         android:layout_marginStart="33dp"
         app:srcCompat="@drawable/portfolio" />
 
@@ -211,8 +184,9 @@
         android:id="@+id/imageView15"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_alignBottom="@+id/imageView6"
+        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/button"
+        android:layout_marginTop="277dp"
         app:srcCompat="@drawable/pencil_edit_button" />
 
 

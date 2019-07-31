@@ -123,6 +123,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (groupPosition == 3) {
             header_text.setBackground(ContextCompat.getDrawable(_context, R.drawable.spinner_layout3));
         }
+        if (groupPosition == 4) {
+            header_text.setBackground(ContextCompat.getDrawable(_context, R.drawable.spinner_layout4));
+        }
         header_text.setText(headerTitle);
 
         // If group is expanded then change the text into bold and change the

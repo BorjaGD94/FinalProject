@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class SearchActivity extends AppCompatActivity {
     EditText destinotxt;
     private EditText hometxt;
     private EditText worktxt;
+    private ImageView editHome;
+    private ImageView editWork;
 
     String origen;
     String destino = "B";
@@ -118,7 +121,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-        //home autocompete
+        //home autocomplete
         hometxt= findViewById(R.id.home);
         hometxt.setOnTouchListener(new View.OnTouchListener() {
 
@@ -160,6 +163,38 @@ public class SearchActivity extends AppCompatActivity {
                         destino_long = Double.parseDouble(db.getlong("work"));
                     }
                     return true;
+                }
+                return false;
+
+            }
+        });
+
+        editHome = findViewById(R.id.imageView14);
+
+        editHome.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openAutocompleteActivity();
+                    estado = 3;
+                }
+                return false;
+
+            }
+        });
+
+        editWork = findViewById(R.id.imageView15);
+
+        editWork.setOnTouchListener(new View.OnTouchListener() {
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    openAutocompleteActivity();
+                    estado = 4;
                 }
                 return false;
 
@@ -214,9 +249,9 @@ public class SearchActivity extends AppCompatActivity {
                     case 1:
                         origentxt.setText("");
                         origentxt.setText(place.getAddress().toString());
-                        origen=place.getAddress().toString();
-                        latitude =place.getLatLng().latitude;
-                        longitud=place.getLatLng().longitude;
+                        origen = place.getAddress().toString();
+                        latitude = place.getLatLng().latitude;
+                        longitud = place.getLatLng().longitude;
                         break;
                     case 2:
                         destinotxt.setText(place.getAddress().toString());
@@ -226,28 +261,29 @@ public class SearchActivity extends AppCompatActivity {
                         break;
                     case 3:
                         hometxt.setText(place.getAddress().toString());
-                        String adress = place.getAddress().toString();
+                        String address = place.getAddress().toString();
                         String lat = Double.toString(place.getLatLng().latitude);
                         String log = Double.toString(place.getLatLng().longitude);
                         String type = "home";
                         destinotxt.setText(place.getAddress().toString());
-                        Adress home = new Adress(adress,lat, log, type);
+                        db.deletePlace(type);
+                        Address home = new Address(address,lat, log, type);
                         db.addPlace(home);
-                        destino_lat =place.getLatLng().latitude;
-                        destino_long=place.getLatLng().longitude;
-
+                        destino_lat = place.getLatLng().latitude;
+                        destino_long = place.getLatLng().longitude;
                         break;
                     case 4:
                         worktxt.setText(place.getAddress().toString());
-                        String adressw = place.getAddress().toString();
+                        String addressW = place.getAddress().toString();
                         String latw = Double.toString(place.getLatLng().latitude);
                         String logw = Double.toString(place.getLatLng().longitude);
                         String typew = "work";
                         destinotxt.setText(place.getAddress().toString());
-                        Adress homew = new Adress(adressw,latw, logw, typew);
+                        db.deletePlace(typew);
+                        Address homew = new Address(addressW,latw, logw, typew);
                         db.addPlace(homew);
-                        destino_lat =place.getLatLng().latitude;
-                        destino_long=place.getLatLng().longitude;
+                        destino_lat = place.getLatLng().latitude;
+                        destino_long = place.getLatLng().longitude;
 
                 } //end switch
 

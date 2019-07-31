@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DirectionsActivity">
+
+    <!--<Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />-->
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent"
+        tools:context=".DirectionsActivity" />
+
+    <!--<RelativeLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="92dp"
+        android:background="@drawable/lin_lay_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/child"
+            android:layout_width="372dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="0dp"
+            android:padding="10dp"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:id="@+id/serviceIcon"
+            android:layout_width="67dp"
+            android:layout_height="68dp"
+            android:layout_alignStart="@+id/child"
+            android:layout_alignParentTop="true"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/serviceName"
+            android:layout_width="186dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/child"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/serviceIcon"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/waitingTime"
+            android:layout_width="232dp"
+            android:layout_height="55dp"
+            android:layout_alignStart="@+id/serviceName"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-22dp"
+            android:layout_marginBottom="2dp"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/priceEstimate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/child"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="0dp"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textColor="#85bb65"
+            android:textStyle="bold" />
+
+    </RelativeLayout>-->
+
+</android.support.constraint.ConstraintLayout>

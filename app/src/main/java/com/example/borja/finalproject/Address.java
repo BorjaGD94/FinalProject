@@ -1,19 +1,19 @@
 package com.example.borja.finalproject;
 
-public class Adress {
+public class Address {
 
 
     private int id;
-    private String adress;
+    private String address;
     private String  lat;
     private String log;
     private String type;
 
-    public Adress () {}
+    public Address () {}
 
-    public Adress (String adress, String lat, String log, String type) {
+    public Address(String address, String lat, String log, String type) {
         super();
-        this.adress=adress;
+        this.address=address;
         this.lat=lat;
         this.log = log;
         this.type = type;
@@ -27,12 +27,12 @@ public class Adress {
         this.id = id;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getLat() {
@@ -61,6 +61,6 @@ public class Adress {
 
     @Override
     public String toString() {
-        return "Place{" + "id=" + id + ", adress='" + adress + '\'' + ", lat=" + lat + ", log=" + log + ", type='" + type + '\'' + '}';
+        return "Place{" + "id=" + id + ", address='" + address + '\'' + ", lat=" + lat + ", log=" + log + ", type='" + type + '\'' + '}';
     }
 }
