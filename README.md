@@ -5,4 +5,4 @@ This project consists in the development of an Android Studio application that w
 
 ### Application Demo
 
-&emsp&emsp![](GetThere.gif)
+&emsp;&emsp;&emsp;&emsp;![](GetThere.gif)
